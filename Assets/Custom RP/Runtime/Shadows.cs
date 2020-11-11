@@ -66,10 +66,8 @@ public class Shadows {
 	}
 
 	public void Cleanup () {
-		if (shadowedDirLightCount > 0) {
-			buffer.ReleaseTemporaryRT(dirShadowAtlasId);
-			ExecuteBuffer();
-		}
+		buffer.ReleaseTemporaryRT(dirShadowAtlasId);
+		ExecuteBuffer();
 	}
 
 	public Vector3 ReserveDirectionalShadows (
@@ -98,6 +96,12 @@ public class Shadows {
 	public void Render () {
 		if (shadowedDirLightCount > 0) {
 			RenderDirectionalShadows();
+		}
+		else {
+			buffer.GetTemporaryRT(
+				dirShadowAtlasId, 1, 1,
+				32, FilterMode.Bilinear, RenderTextureFormat.Shadowmap
+			);
 		}
 	}
 
